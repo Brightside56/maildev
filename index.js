@@ -44,15 +44,15 @@ module.exports = function (config) {
       config.outgoingPort ||
       config.outgoingUser ||
       config.outgoingPass ||
-      config.outgoingSecure){
+      config.outgoingSecure)
+    {
       mailserver.setupOutgoing(
-        config.outgoingHost,
-        parseInt(config.outgoingPort),
-        config.outgoingUser,
-        config.outgoingPass,
-        config.outgoingSecure
-      )
-  }
+      config.outgoingHost,
+      parseInt(config.outgoingPort),
+      config.outgoingUser,
+      config.outgoingPass,
+      config.outgoingSecure)
+    }
 
   if (config.autoRelay) {
     const emailAddress = typeof config.autoRelay === 'string' ? config.autoRelay : null
