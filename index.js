@@ -33,6 +33,7 @@ module.exports = function (config) {
   mailserver.create(
     config.smtp,
     config.ip,
+    config.mailDirectory,   
     config.incomingUser,
     config.incomingPass,
     config.hideExtensions,
