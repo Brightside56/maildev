@@ -1,4 +1,3 @@
-
 /**
  * MailDev - index.js
  *
@@ -44,15 +43,14 @@ module.exports = function (config) {
       config.outgoingPort ||
       config.outgoingUser ||
       config.outgoingPass ||
-      config.outgoingSecure)
-    {
-      mailserver.setupOutgoing(
+      config.outgoingSecure) {
+    mailserver.setupOutgoing(
       config.outgoingHost,
       parseInt(config.outgoingPort),
       config.outgoingUser,
       config.outgoingPass,
       config.outgoingSecure)
-    }
+  }
 
   if (config.autoRelay) {
     const emailAddress = typeof config.autoRelay === 'string' ? config.autoRelay : null
@@ -94,7 +92,7 @@ module.exports = function (config) {
   }
 
   function shutdown () {
-    logger.info(`Received shutdown signal, shutting down now...`)
+    logger.info('Received shutdown signal, shutting down now...')
     async.parallel([
       mailserver.close,
       web.close
