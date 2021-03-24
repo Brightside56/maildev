@@ -29,22 +29,23 @@ module.exports = function (config) {
     logger.setLevel(0)
   }
 
-  // Start the Mailserver & Web GUI
+  // Start the Mailserver
   mailserver.create(
     config.smtp,
     config.ip,
+    config.mailDirectory,
     config.incomingUser,
     config.incomingPass,
-    config.hideExtensions,
-    config.mailLifeSpan
+    config.hideExtensions
   )
 
-  if (config.outgoingHost ||
-      config.outgoingPort ||
-      config.outgoingUser ||
-      config.outgoingPass ||
-      config.outgoingSecure) {
-
+  if (
+    config.outgoingHost ||
+    config.outgoingPort ||
+    config.outgoingUser ||
+    config.outgoingPass ||
+    config.outgoingSecure
+  ) {
     mailserver.setupOutgoing(
       config.outgoingHost,
       parseInt(config.outgoingPort),
