@@ -33,7 +33,7 @@ module.exports = function (config) {
   mailserver.create(
     config.smtp,
     config.ip,
-    config.mailDirectory,   
+    config.mailDirectory,
     config.incomingUser,
     config.incomingPass,
     config.hideExtensions,
@@ -44,15 +44,14 @@ module.exports = function (config) {
       config.outgoingPort ||
       config.outgoingUser ||
       config.outgoingPass ||
-      config.outgoingSecure) {
-
-    mailserver.setupOutgoing(
-      config.outgoingHost,
-      parseInt(config.outgoingPort),
-      config.outgoingUser,
-      config.outgoingPass,
-      config.outgoingSecure
-    )
+      config.outgoingSecure){
+      mailserver.setupOutgoing(
+        config.outgoingHost,
+        parseInt(config.outgoingPort),
+        config.outgoingUser,
+        config.outgoingPass,
+        config.outgoingSecure
+      )
   }
 
   if (config.autoRelay) {
