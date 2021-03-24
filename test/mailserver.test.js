@@ -7,24 +7,32 @@
 
 const assert = require('assert')
 const SMTPConnection = require('smtp-connection')
-const expect = require('expect')
+const http = require('http')
 
 const MailDev = require('../index.js')
 
 describe('mailserver', function () {
   describe('smtp error handling', function () {
     it('Error should be thrown, because listening to server did not work', function (done) {
+      const server = http.createServer(() => {})
       const maildev = new MailDev({
+        disableWeb: true,
         silent: true,
-        disableWeb: true
+        smtp: 9025
       })
-      let spy = expect.createSpy()
-      spy = expect.spyOn(process, 'emit')
-      maildev.smtp.emit('error', { address: 'someAddress', port: 11111 })
+      server.listen(9025, '0.0.0.0')
+      maildev.listen()
 
-      expect(spy).toHaveBeenCalled()
-      spy.restore()
-      maildev.close(done)
+      // https://stackoverflow.com/a/9132271/3143704
+
+      var originalHandler = process.listeners('uncaughtException').pop()
+      process.removeListener('uncaughtException', originalHandler)
+
+      process.once('uncaughtException', function (err) {
+        assert.strictEqual(err.code, 'EADDRINUSE')
+        process.listeners('uncaughtException').push(originalHandler)
+        maildev.close(() => server.close(done))
+      })
     })
   })
 
